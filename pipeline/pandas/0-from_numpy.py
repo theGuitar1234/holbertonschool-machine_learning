@@ -11,6 +11,6 @@ def from_numpy(seed):
         DocString for from_numpy()
     """
 
-    alphabet = __import__("string").ascii_uppercase
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     return pd.DataFrame(seed, columns=list(alphabet[:seed.shape[1]]))
