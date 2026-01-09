@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import pandas as pd
+
 """
     DocString for 0-from_numpy.py
 """
