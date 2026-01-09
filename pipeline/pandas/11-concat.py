@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Docstring for 11-concat.py."""
-import pandas as pd
 
 
 index = __import__(&#39;10-index&#39;).index
+
+
+import pandas as pd
 
 
 def concat(df1, df2):
