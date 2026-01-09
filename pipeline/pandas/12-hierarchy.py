@@ -16,9 +16,7 @@ def hierarchy(df1, df2):
     df.index = df.index.reorder_levels([1, 0])
     timestamps = df.index.get_level_values(0).unique()
     full_index = pd.MultiIndex.from_product(
-        [timestamps, ["bitstamp", "coinbase"]],
-         names=["Timestamp", None],
-    )
+            [timestamps, ["bitstamp", "coinbase"]], names=["Timestamp", None])
     df = df.reindex(full_index)
     df.sort_index(level=0, inplace=True, sort_remaining=False)
     return df
