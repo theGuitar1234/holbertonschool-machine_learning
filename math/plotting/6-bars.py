@@ -19,11 +19,11 @@ def bars():
     plt.title("Number of Fruit per Person")
     plt.ylabel("Quantity of Fruit")
     plt.ylim(0, 80)
+    list1 = level1
+    list2 = level1 + level2
+    list3 = level1 + level2 + level3
     plt.bar(categories, level1, color="red", width=0.5)
-    plt.bar(categories, level2, bottom=level1,\
-            color="yellow", width=0.5)
-    plt.bar(categories, level3, bottom=level1+level2,\
-            color="#ff8000", width=0.5)
-    plt.bar(categories, level4, bottom=level1+level2+level3,\
-            color="#ffe5b4", width=0.5)
+    plt.bar(categories, level2, bottom=list1, color="yellow", width=0.5)
+    plt.bar(categories, level3, bottom=list2, color="#ff8000", width=0.5)
+    plt.bar(categories, level4, bottom=list3, color="#ffe5b4", width=0.5)
     plt.legend(["apples", "bananas", "oranges", "peaches"])
