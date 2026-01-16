@@ -2,17 +2,11 @@
 """Docstring."""
 
 
-sum = 0
-
-
 def summation_i_squared(n):
-    """Docstring."""
-    if n.__class__ is not int:
+    """
+    this is my function
+    """
+    if isinstance(n, int) and n > 0:
+        return n*(n + 1)*(2*n + 1) / 6
+    else:
         return None
-    if n<0:
-        return None
-    global sum
-    if (n == 0):
-        return sum
-    sum += n**2
-    return summation_i_squared(n-1)
