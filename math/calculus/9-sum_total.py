@@ -2,9 +2,15 @@
 """Docstring."""
 
 
+sum = 0
+
+
 def summation_i_squared(n):
     """Docstring."""
-    sum = 0
-    for i in range(n+1):
-        sum += i**2
-    return sum
+    if n.__class__ is not int:
+        return None
+    global sum
+    if (n == 0):
+        return sum
+    sum += n**2
+    return summation_i_squared(n-1)
