@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-"""Docstring for 0-slice_me_up.py."""
-
 arr = [9, 8, 2, 3, 9, 4, 1, 0, 3]
 arr1 = arr[0:2]
 arr2 = arr[4:]
