@@ -8,8 +8,8 @@ def add_matrices2D(mat1, mat2):
         return None
     result = []
     temp = []
-    for i in range(len(mat1[0])):
-        for j in range(len(mat1)):
+    for i in range(len(mat1)):
+        for j in range(len(mat1[0])):
             temp.append(mat1[i][j] + mat2[i][j])
         result.append(temp)
         temp = []
