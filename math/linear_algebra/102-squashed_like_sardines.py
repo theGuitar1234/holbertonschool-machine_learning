@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+"""Docstring for 102-squashed_like_sardines.py."""
 
 
 def _shape(mat):
+    """Docstring for _shape."""
     sh = []
     while isinstance(mat, list):
         sh.append(len(mat))
@@ -10,12 +12,14 @@ def _shape(mat):
 
 
 def _copy(mat):
+    """Docstring for _copy."""
     if isinstance(mat, list):
         return [_copy(x) for x in mat]
     return mat
 
 
 def cat_matrices(mat1, mat2, axis=0):
+    """Docstring for cat_matrices."""
     if not isinstance(axis, int) or axis < 0:
         return None
 
