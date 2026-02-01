@@ -4,9 +4,7 @@
 
 def np_slice(matrix, axes={}):
     """Docstring for np_slice."""
-    result = []
-    for key in axes.keys():
-        for i in range(matrix.shape[0]):
-            s = axes[key]
-            result.append(matrix[i][slice(*s)])
-    return result
+    slc = [slice(None)] * matrix.ndim
+    for axis, s in axes.items():
+        slc[axis] = slice(*s)
+    return matrix[tuple(slc)]
