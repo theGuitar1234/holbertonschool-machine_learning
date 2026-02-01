@@ -6,7 +6,7 @@ def np_slice(matrix, axes={}):
     """Docstring for np_slice."""
     result = []
     for key in axes.keys():
-        for i in range(len(matrix)):
+        for i in range(matrix.shape[0]):
             s = axes[key]
             result.append(matrix[i][slice(*s)])
     return result
