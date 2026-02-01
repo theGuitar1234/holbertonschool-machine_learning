@@ -8,5 +8,5 @@ def np_slice(matrix, axes={}):
     for key in axes.keys():
         for i in range(len(matrix)):
             s = axes[key]
-            result.append(matrix[i][slice(*s)].tolist())
+            result.append(matrix[i][slice(*s)])
     return result
