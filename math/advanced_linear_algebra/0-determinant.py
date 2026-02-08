@@ -4,11 +4,13 @@
 
 def determinant(mat):
     """Docstring for determinant."""
-    if len(mat) == 0:
+    if (not isinstance(mat, list)
+            or len(mat) == 0
+            or not all(isinstance(row, list) for row in mat)):
         raise TypeError("matrix must be a list of lists")
-    if len(mat[0]) == 0:
+    if len(mat) == 1 and len(mat[0]) == 0:
         return 1
-    if len(mat) != len(mat[0]):
+    if any(len(row) != len(mat) for row in mat):
         raise TypeError("matrix must be a square matrix")
 
     if (len(mat) == 1):
