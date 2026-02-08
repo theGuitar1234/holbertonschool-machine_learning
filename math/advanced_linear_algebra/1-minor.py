@@ -4,10 +4,15 @@
 
 def minor(mat):
     """Docstring for minor."""
-    if (not isinstance(mat, list) or len(mat) == 0 or
-            not all(isinstance(row, list) for row in mat) or
-            any(len(row) == 0 for row in mat)):
-        raise TypeError("matrix must be a list of lists")
+    if (
+        not isinstance(mat, list)
+        or len(mat) == 0
+        or not all(isinstance(row, list) for row in mat)
+        or any(len(row) == 0 for row in mat)
+        or any(len(row) != len(mat) for row in mat)
+    ):
+        print("matrix must be a non-empty square matrix")
+        return
     result = []
     for p in range(len(mat)):
         for i in range(len(mat[p])):
