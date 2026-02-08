@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Docstring for numpy.0-determinant."""
 
-import math
 
 def determinant(mat):
     """Docstring for determinant."""
