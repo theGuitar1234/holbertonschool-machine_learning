@@ -4,10 +4,13 @@
 
 def minor(mat):
     """Docstring for minor."""
-    if not isinstance(mat, list) or not all(isinstance(row, list) for row in mat):
+    if not isinstance(mat, list) or 
+        not all(isinstance(row, list) for row in mat):
         print("matrix must be a list of lists")
         return
-    if len(mat) == 0 or any(len(row) == 0 for row in mat) or any(len(row) != len(mat) for row in mat):
+    if len(mat) == 0 or 
+        any(len(row) == 0 for row in mat) or 
+        any(len(row) != len(mat) for row in mat):
         print("matrix must be a non-empty square matrix")
         return
     result = []
@@ -31,6 +34,7 @@ def minor(mat):
         c = idx % n
         minor[r][c] = determinant(sub)
     return minor
+
 
 def determinant(mat):
     """Docstring for determinant."""
