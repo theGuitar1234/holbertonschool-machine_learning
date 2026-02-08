@@ -5,7 +5,7 @@
 def determinant(mat):
     """Docstring for determinant."""
     if (not isinstance(mat, list) or len(mat) == 0 or
-        not all(isinstance(row, list) for row in mat)):
+            not all(isinstance(row, list) for row in mat)):
         print("matrix must be a list of lists")
         return
     if len(mat) == 1 and len(mat[0]) == 0:
@@ -14,15 +14,11 @@ def determinant(mat):
     if any(len(row) != n for row in mat):
         print("matrix must be a square matrix")
         return
-
     if (len(mat) == 1):
-        #print("reached the end : ", mat)
+        # print("reached the end : ", mat)
         return mat[0][0]
-
     result = []
-
     res = 0
-    
     for i in range(len(mat[0])):
         chunk = []
         for j in range(1, len(mat)):
