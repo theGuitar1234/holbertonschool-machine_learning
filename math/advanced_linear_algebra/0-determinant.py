@@ -1,0 +1,33 @@
+#!/usr/bin/env python3
+"""Docstring for numpy.0-determinant."""
+
+import math
+
+def determinant(mat):
+    """Docstring for determinant."""
+    if len(mat) == 0:
+        raise TypeError("matrix must be a list of lists")
+    if len(mat[0]) == 0:
+        return 1
+    if len(mat) != len(mat[0]):
+        raise TypeError("matrix must be a square matrix")
+
+    if (len(mat) == 1):
+        #print("reached the end : ", mat)
+        return mat[0][0]
+
+    result = []
+
+    res = 0
+    
+    for i in range(len(mat[0])):
+        chunk = []
+        for j in range(1, len(mat)):
+            temp = []
+            for k in range(len(mat[j])):
+                if (k != i):
+                    temp.append(mat[j][k])
+            chunk.append(temp)
+        result.append(chunk)
+        res += mat[0][i] * determinant(chunk) * (-1)**i
+    return res
