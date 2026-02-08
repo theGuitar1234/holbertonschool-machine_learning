@@ -17,7 +17,10 @@ def inverse(mat):
     ):
         print("matrix must be a non-empty square matrix")
         return
-    return 1/determinant(mat) * adjugate(mat)
+    det = determinant(mat)
+    if (det == 0):
+        return None
+    return 1/det * adjugate(mat)
 
 
 def adjugate(mat):
