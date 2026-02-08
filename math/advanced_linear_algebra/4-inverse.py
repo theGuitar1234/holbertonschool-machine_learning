@@ -20,7 +20,8 @@ def inverse(mat):
     det = determinant(mat)
     if (det == 0):
         return None
-    return 1/det * adjugate(mat)
+    adj = adjugate(mat)
+    return [[elem / det for elem in row] for row in adj]
 
 
 def adjugate(mat):
