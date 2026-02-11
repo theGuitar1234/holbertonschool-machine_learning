@@ -31,7 +31,7 @@ class Binomial:
 
             self.n = int(n_est)
             self.p = float(p_final)
-    
+
     def pmf(self, k):
         """Docstring for pmf."""
         if not isinstance(k, int):
