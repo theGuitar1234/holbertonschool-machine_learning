@@ -31,3 +31,19 @@ class Binomial:
 
             self.n = int(n_est)
             self.p = float(p_final)
+    
+    def pmf(self, k):
+        """Docstring for pmf."""
+        if not isinstance(k, int):
+            k = int(k)
+
+        if k < 0 or k > self.n:
+            return 0
+
+        comb = 1
+        k_eff = min(k, self.n - k)
+        for i in range(1, k_eff + 1):
+            comb *= (self.n - (k_eff - i))
+            comb /= i
+
+        return comb * (self.p ** k) * ((1 - self.p) ** (self.n - k))
