@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Docstring for poisson.py."""
 
-import math
-
 
 class Poisson:
     """Docstring for Poisson."""
@@ -21,14 +19,21 @@ class Poisson:
             self.lambtha = float(sum(data) / len(data))
 
     def pmf(self, k):
-        """Docstring for pmf"""
+        """Docstring for pmf."""
         k = int(k)
         if k < 0:
             return 0
-        return (math.exp(-self.lambtha) * (self.lambtha ** k)) / math.factorial(k)
+        return (2.7182818285 ** ((-self.lambtha) * (self.lambtha ** k))) / factorial(k)
 
+    def factorial(k):
+        if (k == 0):
+            return 1
+        if (k == 1):
+            return 1
+        return k*factorial(k-1)
+        
     def cdf(self, k):
-        """Docstring for cdf"""
+        """Docstring for cdf."""
         k = int(k)
         if k < 0:
             return 0
