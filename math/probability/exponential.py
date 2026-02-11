@@ -19,3 +19,9 @@ class Exponential:
 
             mean = sum(data) / len(data)
             self.lambtha = float(1 / mean)
+
+    def pdf(self, x):
+        """Docstring for pdf."""
+        if x < 0:
+            return 0
+        return self.lambtha * (2.7182818285 ** (-self.lambtha * x))
