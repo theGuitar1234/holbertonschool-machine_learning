@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""100-continuous.py"""
+"""100-continuous.py."""
 
 from scipy import special
 
