@@ -23,15 +23,17 @@ class Poisson:
         k = int(k)
         if k < 0:
             return 0
-        return (2.7182818285 ** ((-self.lambtha) * (self.lambtha ** k))) / factorial(k)
+        divisor = 2.7182818285 ** ((-self.lambtha) * (self.lambtha ** k))
+        return divisor / factorial(k)
 
     def factorial(k):
+        """Docstring for factorial."""
         if (k == 0):
             return 1
         if (k == 1):
             return 1
         return k*factorial(k-1)
-        
+
     def cdf(self, k):
         """Docstring for cdf."""
         k = int(k)
