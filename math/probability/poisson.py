@@ -18,6 +18,14 @@ class Poisson:
                 raise ValueError("data must contain multiple values")
             self.lambtha = float(sum(data) / len(data))
 
+    def factorial(self, k):
+        """Docstring for factorial."""
+        if (k == 0):
+            return 1
+        if (k == 1):
+            return 1
+        return k*factorial(self, k-1)
+
     def pmf(self, k):
         """Docstring for pmf."""
         if not isinstance(k, int):
@@ -25,15 +33,7 @@ class Poisson:
         if k < 0:
             return 0
         divisor = 2.7182818285 ** ((-self.lambtha) * (self.lambtha ** k))
-        return divisor / factorial(k)
-
-    def factorial(k):
-        """Docstring for factorial."""
-        if (k == 0):
-            return 1
-        if (k == 1):
-            return 1
-        return k*factorial(k-1)
+        return divisor / factorial(self, k)
 
     def cdf(self, k):
         """Docstring for cdf."""
