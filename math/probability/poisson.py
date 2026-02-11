@@ -20,7 +20,8 @@ class Poisson:
 
     def pmf(self, k):
         """Docstring for pmf."""
-        k = int(k)
+        if not isinstance(k, int):
+            k = int(k)
         if k < 0:
             return 0
         divisor = 2.7182818285 ** ((-self.lambtha) * (self.lambtha ** k))
