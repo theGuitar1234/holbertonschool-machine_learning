@@ -31,7 +31,7 @@ class Binomial:
 
             self.n = int(n_est)
             self.p = float(p_final)
-
+    
     def pmf(self, k):
         """Docstring for pmf."""
         if not isinstance(k, int):
@@ -47,3 +47,15 @@ class Binomial:
             comb /= i
 
         return comb * (self.p ** k) * ((1 - self.p) ** (self.n - k))
+
+    def cdf(self, k):
+        """Docstring for cdf."""
+        if not isinstance(k, int):
+            k = int(k)
+
+        if k < 0:
+            return 0
+        if k > self.n:
+            return 1
+
+        return sum(self.pmf(i) for i in range(k + 1))
