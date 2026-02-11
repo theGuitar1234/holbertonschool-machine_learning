@@ -22,3 +22,11 @@ class Normal:
             var = sum((x - m) ** 2 for x in data) / len(data)
             self.mean = float(m)
             self.stddev = float(var ** 0.5)
+
+    def z_score(self, x):
+        """Docstring for z_score."""
+        return (x - self.mean) / self.stddev
+
+    def x_value(self, z):
+        """Docstring for x_value."""
+        return self.mean + (z * self.stddev)
