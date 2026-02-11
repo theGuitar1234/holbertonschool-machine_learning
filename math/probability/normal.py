@@ -30,3 +30,13 @@ class Normal:
     def x_value(self, z):
         """Docstring for x_value."""
         return self.mean + (z * self.stddev)
+
+    def pdf(self, x):
+        """Docstring for pdf."""
+        pi = 3.1415926536
+        e = 2.7182818285
+
+        z = (x - self.mean) / self.stddev
+        coef = 1 / (self.stddev * ((2 * pi) ** 0.5))
+        expo = e ** (-0.5 * (z ** 2))
+        return coef * expo
