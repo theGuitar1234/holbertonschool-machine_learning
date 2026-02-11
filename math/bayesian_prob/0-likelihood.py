@@ -11,7 +11,7 @@ def likelihood(x, n, P):
         raise ValueError("n must be a positive integer")
 
     if type(x) is not int or x < 0:
-        raise ValueError("x must be a positive integer")
+        raise ValueError("x must be an integer that is greater than or equal to 0")
 
     if x > n:
         raise ValueError("x cannot be greater than n")
@@ -26,16 +26,26 @@ def likelihood(x, n, P):
                np.math.lgamma(x + 1) -
                np.math.lgamma(n - x + 1))
 
+    logP = np.empty_like(P, dtype=float)
+    maskP = (P > 0)
+    logP[maskP] = np.log(P[maskP])
+    logP[~maskP] = -np.inf
+
+    logQ = np.empty_like(P, dtype=float)
+    maskQ = (P < 1)
+    logQ[maskQ] = np.log(1 - P[maskQ])
+    logQ[~maskQ] = -np.inf
+
     if x == 0:
         term_p = np.zeros_like(P, dtype=float)
     else:
-        term_p = x * np.where(P == 0, -np.inf, np.log(P))
+        term_p = x * logP
 
     nx = n - x
     if nx == 0:
         term_q = np.zeros_like(P, dtype=float)
     else:
-        term_q = nx * np.where(P == 1, -np.inf, np.log(1 - P))
+        term_q = nx * logQ
 
     logL = log_nCk + term_p + term_q
     return np.exp(logL)
