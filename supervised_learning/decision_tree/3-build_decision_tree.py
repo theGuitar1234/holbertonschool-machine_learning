@@ -93,7 +93,6 @@ class Node:
 
         return text
 
-
     def get_leaves_below(self):
         """Return the list of all leaves in the subtree rooted at this node."""
         leaves = []
