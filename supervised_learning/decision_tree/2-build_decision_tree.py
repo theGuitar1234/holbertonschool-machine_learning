@@ -49,7 +49,7 @@ class Node:
                 only_leaves=only_leaves)
 
         return count
-    
+
     def left_child_add_prefix(self, text):
         lines = text.split("\n")
         new_text = "    +--" + lines[0] + "\n"
@@ -61,7 +61,7 @@ class Node:
         lines = text.split("\n")
         new_text = "    +--" + lines[0] + "\n"
         for x in lines[1:]:
-            new_text += ("       " + x) + "\n"   # 7 spaces (same width as "    |  ")
+            new_text += ("       " + x) + "\n"
         return new_text
 
     def __str__(self):
@@ -71,11 +71,13 @@ class Node:
         else:
             text = f"-> node [feature={self.feature}, threshold={self.threshold}]"
         if self.left_child is not None:
-            text += "\n" + self.left_child_add_prefix(str(self.left_child).rstrip("\n"))
+            text += "\n" + self.left_child_add_prefix(
+                str(self.left_child).rstrip("\n"))
         if self.right_child is not None:
             if self.left_child is None:
                 text += "\n"
-            text += self.right_child_add_prefix(str(self.right_child).rstrip("\n"))
+            text += self.right_child_add_prefix(
+                str(self.right_child).rstrip("\n"))
 
         return text
 
@@ -122,7 +124,7 @@ class Decision_Tree():
         self.min_pop = min_pop
         self.split_criterion = split_criterion
         self.predict = None
-    
+
     def __str__(self):
         """Docstring."""
         return self.root.__str__()
