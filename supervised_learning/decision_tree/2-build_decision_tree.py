@@ -65,21 +65,29 @@ class Node:
         return new_text
 
     def __str__(self):
-        """Docstring."""
+        """Return a printable representation of the subtree."""
         if self.is_root:
-            str = f"root [feature={self.feature}, threshold={self.threshold}]"
-            text = str
+            text = (
+                f"root [feature={self.feature}, "
+                f"threshold={self.threshold}]"
+            )
         else:
-            str = f"-> node [feature={self.feature}, threshold={self.threshold}]"
-            text = str
+            text = (
+                f"-> node [feature={self.feature}, "
+                f"threshold={self.threshold}]"
+            )
+
         if self.left_child is not None:
             text += "\n" + self.left_child_add_prefix(
-                str(self.left_child).rstrip("\n"))
+                str(self.left_child).rstrip("\n")
+            )
+
         if self.right_child is not None:
             if self.left_child is None:
                 text += "\n"
             text += self.right_child_add_prefix(
-                str(self.right_child).rstrip("\n"))
+                str(self.right_child).rstrip("\n")
+            )
 
         return text
 
