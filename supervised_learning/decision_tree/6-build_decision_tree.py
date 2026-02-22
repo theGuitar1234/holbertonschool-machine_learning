@@ -251,7 +251,9 @@ class Decision_Tree():
         for leaf in leaves:
             leaf.update_indicator()
         values = np.array([leaf.value for leaf in leaves], dtype=int)
+
         def predict_func(A):
+            """Docstring."""
             indicators = np.array(
                 [leaf.indicator(A) for leaf in leaves],
                 dtype=int
