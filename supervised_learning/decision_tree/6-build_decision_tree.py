@@ -162,11 +162,11 @@ class Node:
             axis=0,
         )
 
-        def pred(self, x):
-            """Docstring."""
-            if x[self.feature] > self.threshold:
-                return self.left_child.pred(x)
-            return self.right_child.pred(x)
+    def pred(self, x):
+        """Docstring."""
+        if x[self.feature] > self.threshold:
+            return self.left_child.pred(x)
+        return self.right_child.pred(x)
 
 
 class Leaf(Node):
@@ -258,3 +258,7 @@ class Decision_Tree():
             )
             return values @ indicators
         self.predict = predict_func
+
+    def pred(self, x):
+        """Docstring."""
+        return self.root.pred(x)
