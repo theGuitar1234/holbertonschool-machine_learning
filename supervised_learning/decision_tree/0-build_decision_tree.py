@@ -3,8 +3,10 @@
 
 import numpy as np
 
+
 class Node:
     """Docstring."""
+    
     def __init__(self, 
                  feature=None, 
                  threshold=None, 
