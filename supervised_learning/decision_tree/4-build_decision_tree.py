@@ -94,16 +94,16 @@ class Node:
         return text
 
     def get_leaves_below(self):
-        """Return the list of all leaves in the subtree rooted at this node."""
+        """Return all leaves in this subtree."""
         leaves = []
 
         if self.left_child is not None:
-            leaves += self.left_child.get_leaves_below()
+            leaves.extend(self.left_child.get_leaves_below())
 
         if self.right_child is not None:
-            leaves += self.right_child.get_leaves_below()
+            leaves.extend(self.right_child.get_leaves_below())
 
-        return 
+        return leaves
 
     def update_bounds_below(self):
         """Docstring."""
