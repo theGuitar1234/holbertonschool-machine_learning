@@ -264,8 +264,9 @@ class Decision_Tree():
     def pred(self, x):
         """Docstring."""
         return self.root.pred(x)
-    
+
     def np_extrema(self, arr):
+        """Docstring."""
         return np.min(arr), np.max(arr)
 
     def random_split_criterion(self, node):
@@ -292,12 +293,14 @@ class Decision_Tree():
         self.fit_node(self.root)
         self.update_predict()
         if verbose == 1:
+            str = self.count_nodes(only_leaves=True)
+            str2 = self.accuracy(self.explanatory, self.target)
             print(
                 f"""  Training finished.
     - Depth                     : {self.depth()}
     - Number of nodes           : {self.count_nodes()}
-    - Number of leaves          : {self.count_nodes(only_leaves=True)}
-    - Accuracy on training data : {self.accuracy(self.explanatory, self.target)}"""
+    - Number of leaves          : {str}
+    - Accuracy on training data : {str2}"""
             )
 
     def fit_node(self, node):
