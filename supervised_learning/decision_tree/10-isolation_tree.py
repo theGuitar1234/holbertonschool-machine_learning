@@ -51,7 +51,8 @@ class Isolation_Random_Tree:
 
         def predict_func(a):
             """Docstring."""
-            indicators = np.array([leaf.indicator(a) for leaf in leaves], dtype=int)
+            lst = [leaf.indicator(a) for leaf in leaves]
+            indicators = np.array(lst, dtype=int)
             return values @ indicators
         self.predict = predict_func
 
@@ -72,6 +73,7 @@ class Isolation_Random_Tree:
         return feature, threshold
 
     def get_leaf_child(self, node, sub_population):
+        """Docstring."""
         leaf_depth = node.depth + 1
         leaf_child = Leaf(leaf_depth, depth=leaf_depth)
         leaf_child.depth = leaf_depth
@@ -93,7 +95,8 @@ class Isolation_Random_Tree:
             node.left_child = self.get_leaf_child(
                 node, np.zeros_like(node.sub_population, dtype=bool)
             )
-            node.right_child = self.get_leaf_child(node, node.sub_population.copy())
+            a = self.get_leaf_child(node, node.sub_population.copy())
+            node.right_child = a
             return
         sub_x = self.explanatory[node.sub_population, :]
         if np.all(np.ptp(sub_x, axis=0) == 0):
@@ -102,7 +105,8 @@ class Isolation_Random_Tree:
             node.left_child = self.get_leaf_child(
                 node, np.zeros_like(node.sub_population, dtype=bool)
             )
-            node.right_child = self.get_leaf_child(node, node.sub_population.copy())
+            b = self.get_leaf_child(node, node.sub_population.copy())
+            node.right_child = b
             return
         node.feature, node.threshold = self.random_split_criterion(node)
         feat_col = self.explanatory[:, node.feature]
