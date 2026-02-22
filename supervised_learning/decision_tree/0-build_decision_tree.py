@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Docstring."""
 
 
 import numpy as np
@@ -58,7 +59,7 @@ class Decision_Tree():
                  seed=0,
                  split_criterion="random",
                  root=None):
-        """Docstring"""
+        """Docstring."""
         self.rng = np.random.default_rng(seed)
         if root:
             self.root = root
