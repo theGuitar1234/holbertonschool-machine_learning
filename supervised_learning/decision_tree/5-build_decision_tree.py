@@ -134,8 +134,10 @@ class Node:
 
         def is_large_enough(x):
             """Docstring."""
-            if not hasattr(self, "lower") \
-                or self.lower is None or len(self.lower) == 0:
+            if (
+                not hasattr(self, "lower")
+                or self.lower is None or len(self.lower) == 0
+            ):
                 return np.ones(x.shape[0], dtype=bool)
             checks = np.array([
                 np.greater(x[:, key], self.lower[key])
@@ -145,8 +147,10 @@ class Node:
 
         def is_small_enough(x):
             """Docstring."""
-            if not hasattr(self, "upper") \
-                or self.upper is None or len(self.upper) == 0:
+            if (
+                not hasattr(self, "upper")
+                or self.upper is None or len(self.upper) == 0
+            ):
                 return np.ones(x.shape[0], dtype=bool)
             checks = np.array([
                 np.less_equal(x[:, key], self.upper[key])
