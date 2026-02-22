@@ -355,7 +355,7 @@ class Decision_Tree():
         """Docstring."""
         preds = self.predict(test_explanatory)
         return np.sum(np.equal(preds, test_target)) / test_target.size
-    
+
     def possible_thresholds(self, node, feature):
         """Docstring."""
         values = np.unique((self.explanatory[:, feature])[node.sub_population])
@@ -391,7 +391,7 @@ class Decision_Tree():
         """Docstring."""
         X = np.array(
             [self.Gini_split_criterion_one_feature(node, i)
-            for i in range(self.explanatory.shape[1])]
+                for i in range(self.explanatory.shape[1])]
         )
         i = int(np.argmin(X[:, 1]))
         return i, X[i, 0]
