@@ -6,12 +6,12 @@ import numpy as np
 
 class Node:
     """Docstring."""
-    
-    def __init__(self, 
-                 feature=None, 
-                 threshold=None, 
-                 left_child=None, 
-                 right_child=None, 
+
+    def __init__(self,
+                 feature=None,
+                 threshold=None,
+                 left_child=None,
+                 right_child=None,
                  is_root=False, depth=0):
         """Docstring."""
         self.feature = feature
@@ -52,11 +52,11 @@ class Leaf(Node):
 
 class Decision_Tree():
     """Docstring."""
-    def __init__(self, 
-                 max_depth=10, 
-                 min_pop=1, 
-                 seed=0, 
-                 split_criterion="random", 
+    def __init__(self,
+                 max_depth=10,
+                 min_pop=1,
+                 seed=0,
+                 split_criterion="random",
                  root=None):
         """Docstring"""
         self.rng = np.random.default_rng(seed)
