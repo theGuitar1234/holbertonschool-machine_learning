@@ -36,16 +36,17 @@ class Node:
 
         return max_depth
 
-
     def count_nodes_below(self, only_leaves=False):
         """Docstring."""
         count = 0 if only_leaves else 1
 
         if self.left_child is not None:
-            count += self.left_child.count_nodes_below(only_leaves=only_leaves)
+            count += self.left_child.count_nodes_below(
+                only_leaves=only_leaves)
 
         if self.right_child is not None:
-            count += self.right_child.count_nodes_below(only_leaves=only_leaves)
+            count += self.right_child.count_nodes_below(
+                only_leaves=only_leaves)
 
         return count
 
@@ -92,7 +93,7 @@ class Decision_Tree():
     def depth(self):
         """Docstring."""
         return self.root.max_depth_below()
-    
+
     def count_nodes(self, only_leaves=False):
         """Docstring."""
         return self.root.count_nodes_below(only_leaves=only_leaves)
