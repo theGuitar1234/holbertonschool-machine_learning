@@ -108,22 +108,23 @@ class Node:
     def update_bounds_below(self):
         """Docstring."""
         if self.is_root:
-            root_feat = 0 if self.feature is None else self.feature
-            self.upper = {root_feat: np.inf}
-            self.lower = {root_feat: -np.inf}
+            self.upper = {0: np.inf}
+            self.lower = {0: -np.inf}
+
         for child in [self.left_child, self.right_child]:
             if child is None:
                 continue
+
             child.lower = dict(self.lower)
             child.upper = dict(self.upper)
-            if self.feature is None or self.threshold is None:
-                continue
+
             if child is self.left_child:
                 prev = child.lower.get(self.feature, -np.inf)
                 child.lower[self.feature] = max(prev, self.threshold)
             else:
                 prev = child.upper.get(self.feature, np.inf)
                 child.upper[self.feature] = min(prev, self.threshold)
+
         for child in [self.left_child, self.right_child]:
             if child is not None:
                 child.update_bounds_below()
