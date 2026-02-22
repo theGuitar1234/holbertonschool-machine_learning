@@ -63,6 +63,10 @@ class Leaf(Node):
         """Docstring."""
         return self.depth
 
+    def count_nodes_below(self, only_leaves=False):
+        """Docstring."""
+        return 1
+
 
 class Decision_Tree():
     """Docstring."""
@@ -88,3 +92,7 @@ class Decision_Tree():
     def depth(self):
         """Docstring."""
         return self.root.max_depth_below()
+    
+    def count_nodes(self, only_leaves=False):
+        """Docstring."""
+        return self.root.count_nodes_below(only_leaves=only_leaves)
