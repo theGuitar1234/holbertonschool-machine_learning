@@ -67,10 +67,10 @@ class Node:
     def __str__(self):
         """Docstring."""
         if self.is_root:
-            str = "root [feature={self.feature}, threshold={self.threshold}]"
+            str = f"root [feature={self.feature}, threshold={self.threshold}]"
             text = str
         else:
-            str = "-> node [feature={self.feature}, threshold={self.threshold}]"
+            str = f"-> node [feature={self.feature}, threshold={self.threshold}]"
             text = str
         if self.left_child is not None:
             text += "\n" + self.left_child_add_prefix(
