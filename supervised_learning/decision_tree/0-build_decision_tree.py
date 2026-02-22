@@ -48,5 +48,5 @@ class Decision_Tree():
         self.split_criterion = split_criterion
         self.predict = None
 
-    def depth(self) :
+    def depth(self):
         return self.root.max_depth_below()
