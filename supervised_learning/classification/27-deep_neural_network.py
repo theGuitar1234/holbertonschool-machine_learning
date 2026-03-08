@@ -63,9 +63,8 @@ class DeepNeuralNetwork:
             Z = np.matmul(W, A_prev) + b
 
             if i == self.__L:
-                Z_shift = Z - np.max(Z, axis=0, keepdims=True)
-                exp_Z = np.exp(Z_shift)
-                A = exp_Z / np.sum(exp_Z, axis=0, keepdims=True)
+                T = np.exp(Z)
+                A = T / np.sum(T, axis=0, keepdims=True)
             else:
                 A = 1 / (1 + np.exp(-Z))
 
@@ -76,7 +75,7 @@ class DeepNeuralNetwork:
     def cost(self, Y, A):
         """Calculates the cost of the model"""
         m = Y.shape[1]
-        return -np.sum(Y * np.log(A + 1e-8)) / m
+        return -np.sum(Y * np.log(A)) / m
 
     def evaluate(self, X, Y):
         """Evaluates the network's predictions"""
@@ -109,10 +108,8 @@ class DeepNeuralNetwork:
             )
 
             if i > 1:
-                A_prev_layer = cache["A{}".format(i - 1)]
-                dZ = np.matmul(W.T, dZ) * (
-                    A_prev_layer * (1 - A_prev_layer)
-                )
+                A_curr = cache["A{}".format(i - 1)]
+                dZ = np.matmul(W.T, dZ) * (A_curr * (1 - A_curr))
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
@@ -125,7 +122,7 @@ class DeepNeuralNetwork:
             raise TypeError("alpha must be a float")
         if alpha < 0:
             raise ValueError("alpha must be positive")
-        if graph or verbose:
+        if verbose or graph:
             if type(step) is not int:
                 raise TypeError("step must be an integer")
             if step < 1 or step > iterations:
@@ -137,7 +134,7 @@ class DeepNeuralNetwork:
         for i in range(iterations + 1):
             A, cache = self.forward_prop(X)
 
-            if i == iterations or i % step == 0:
+            if i == 0 or i % step == 0 or i == iterations:
                 c = self.cost(Y, A)
                 if verbose:
                     print("Cost after {} iterations: {}".format(i, c))
