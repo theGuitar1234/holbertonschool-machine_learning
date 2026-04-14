@@ -5,21 +5,7 @@ import numpy as np
 
 
 def convolve_grayscale_valid(images, kernel):
-    """
-    images - an ndarray with shape (m, h, w) containing
-            multiple grayscale images
-
-            m - the number of images
-            h - the height in pixels of the image
-            w - the width in pixels of the images
-
-    kernel - an ndarray with shape (kh, kw) containing
-            the kernel for the convolution
-
-            kh - the height of the kernel
-            kw - the width of the kernel
-    Returns: a numpy.ndarray containing the convolved images
-    """
+    """Docstring."""
     m, h, w = images.shape
     kh, kw = kernel.shape
 
