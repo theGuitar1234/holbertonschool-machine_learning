@@ -6,73 +6,83 @@ import tensorflow.keras as keras
 def autoencoder(input_dims, hidden_layers, latent_dims):
     """
     Creates a variational autoencoder.
-    Returns: encoder, decoder, vae
+
+    Args:
+        input_dims: dimensions of the model input
+        hidden_layers: list of nodes for each hidden encoder layer
+        latent_dims: dimensions of the latent space
+
+    Returns:
+        encoder, decoder, auto
     """
 
     # Encoder
-    input_encoder = keras.Input(shape=(input_dims,))
+    encoder_input = keras.Input(shape=(input_dims,))
+    x = encoder_input
 
-    encode = input_encoder
     for nodes in hidden_layers:
-        encode = keras.layers.Dense(nodes, activation='relu')(encode)
+        x = keras.layers.Dense(nodes, activation='relu')(x)
 
-    z_mean = keras.layers.Dense(latent_dims)(encode)
-    z_log_sigma = keras.layers.Dense(latent_dims)(encode)
+    z_mean = keras.layers.Dense(latent_dims)(x)
+    z_log_var = keras.layers.Dense(latent_dims)(x)
 
     def sampling(args):
-        """ Samples a latent vector """
-        z_mean, z_log_sigma = args
+        """Reparameterization trick"""
+        z_mean, z_log_var = args
         batch = keras.backend.shape(z_mean)[0]
-        dims = keras.backend.int_shape(z_mean)[1]
-        epsilon = keras.backend.random_normal(shape=(batch, dims))
-        return z_mean + keras.backend.exp(z_log_sigma / 2) * epsilon
+        dim = keras.backend.int_shape(z_mean)[1]
+        epsilon = keras.backend.random_normal(shape=(batch, dim))
+        return z_mean + keras.backend.exp(0.5 * z_log_var) * epsilon
 
-    z = keras.layers.Lambda(sampling)([z_mean, z_log_sigma])
+    z = keras.layers.Lambda(sampling)([z_mean, z_log_var])
 
     encoder = keras.Model(
-        inputs=input_encoder,
-        outputs=[z, z_mean, z_log_sigma]
+        inputs=encoder_input,
+        outputs=[z, z_mean, z_log_var]
     )
 
     # Decoder
-    input_decoder = keras.Input(shape=(latent_dims,))
+    decoder_input = keras.Input(shape=(latent_dims,))
+    x = decoder_input
 
-    decode = input_decoder
     for nodes in reversed(hidden_layers):
-        decode = keras.layers.Dense(nodes, activation='relu')(decode)
+        x = keras.layers.Dense(nodes, activation='relu')(x)
 
-    output_decoder = keras.layers.Dense(
+    decoder_output = keras.layers.Dense(
         input_dims,
         activation='sigmoid'
-    )(decode)
+    )(x)
 
     decoder = keras.Model(
-        inputs=input_decoder,
-        outputs=output_decoder
+        inputs=decoder_input,
+        outputs=decoder_output
     )
 
     # Full VAE
-    z, z_mean, z_log_sigma = encoder(input_encoder)
-    outputs = decoder(z)
+    z, z_mean, z_log_var = encoder(encoder_input)
+    auto_output = decoder(z)
 
-    def loss(true, pred):
-        """ VAE loss: reconstruction loss + KL divergence """
-        reconstruction_loss = keras.losses.binary_crossentropy(true, pred)
+    def vae_loss(y_true, y_pred):
+        """VAE loss"""
+        reconstruction_loss = keras.losses.binary_crossentropy(
+            y_true,
+            y_pred
+        )
         reconstruction_loss *= input_dims
 
-        kl_loss = 1 + z_log_sigma
+        kl_loss = 1 + z_log_var
         kl_loss -= keras.backend.square(z_mean)
-        kl_loss -= keras.backend.exp(z_log_sigma)
+        kl_loss -= keras.backend.exp(z_log_var)
         kl_loss = keras.backend.sum(kl_loss, axis=-1)
         kl_loss *= -0.5
 
         return keras.backend.mean(reconstruction_loss + kl_loss)
 
-    vae = keras.Model(
-        inputs=input_encoder,
-        outputs=outputs
+    auto = keras.Model(
+        inputs=encoder_input,
+        outputs=auto_output
     )
 
-    vae.compile(optimizer='adam', loss=loss)
+    auto.compile(optimizer='adam', loss=vae_loss)
 
-    return encoder, decoder, vae
+    return encoder, decoder, auto
