@@ -1,82 +1,52 @@
 #!/usr/bin/env python3
-"""
-Defines class Dataset that loads and preps a dataset for machine translation
-"""
+"""Load and prepare a Portuguese-to-English translation dataset."""
 
-
-import tensorflow.compat.v2 as tf
-import tensorflow_datasets as tfds
+import transformers
+from setup import load_pt2en
 
 
 class Dataset:
-    """
-    Loads and preps a dataset for machine translation
+    """Load the translation datasets and create subword tokenizers."""
 
-    class constructor:
-        def __init__(self)
-
-    public instance attributes:
-        data_train:
-            contains the ted_hrlr_translate/pt_to_en
-                tf.data.Dataset train split, loaded as_supervided
-        data_valid:
-            contains the ted_hrlr_translate/pt_to_en
-                tf.data.Dataset validate split, loaded as_supervided
-        tokenizer_pt:
-            the Portuguese tokenizer created from the training set
-        tokenizer_en:
-            the English tokenizer created from the training set
-
-    instance method:
-        def tokenize_dataset(self, data):
-            that creates sub-word tokenizers for our dataset
-    """
     def __init__(self):
-        """
-        Class constructor
+        """Initialize the training data, validation data, and tokenizers."""
+        self.data_train = load_pt2en("train")
+        self.data_valid = load_pt2en("validation")
 
-        Sets the public instance attributes:
-            data_train:
-                contains the ted_hrlr_translate/pt_to_en
-                    tf.data.Dataset train split, loaded as_supervided
-            data_valid:
-                contains the ted_hrlr_translate/pt_to_en
-                    tf.data.Dataset validate split, loaded as_supervided
-            tokenizer_pt:
-                the Portuguese tokenizer created from the training set
-            tokenizer_en:
-                the English tokenizer created from the training set
-        """
-        self.data_train = tfds.load("ted_hrlr_translate/pt_to_en",
-                                    split="train",
-                                    as_supervised=True)
-        self.data_valid = tfds.load("ted_hrlr_translate/pt_to_en",
-                                    split="validation",
-                                    as_supervised=True)
         self.tokenizer_pt, self.tokenizer_en = self.tokenize_dataset(
-            self.data_train)
+            self.data_train
+        )
 
     def tokenize_dataset(self, data):
-        """
-        Creates sub_word tokenizers for our dataset
+        """Create Portuguese and English tokenizers from a dataset.
 
-        parameters:
-            data [tf.data.Dataset]:
-                dataset to use whose examples are formatted as tuple (pt, en)
-                pt [tf.Tensor]:
-                    contains the Portuguese sentence
-                en [tf.Tensor]:
-                    contains the corresponding English sentence
-        returns:
-            tokenizer_pt, tokenizer_en:
-                tokenizer_pt: the Portuguese tokenizer
-                tokenizer_en: the English tokenizer
+        Args:
+            data: A dataset containing Portuguese-English sentence pairs.
+
+        Returns:
+            A tuple containing the Portuguese tokenizer and English tokenizer.
         """
-        SubwordTextEncoder = tfds.deprecated.text.SubwordTextEncoder
-        tokenizer_pt = SubwordTextEncoder.build_from_corpus(
-            (pt.numpy() for pt, en in data),
-            target_vocab_size=(2 ** 15))
-        tokenizer_en = SubwordTextEncoder.build_from_corpus(
-            (en.numpy() for pt, en in data),
-            target_vocab_size=(2 ** 15))
+        pretrained_pt = transformers.AutoTokenizer.from_pretrained(
+            "neuralmind/bert-base-portuguese-cased"
+        )
+        pretrained_en = transformers.AutoTokenizer.from_pretrained(
+            "bert-base-uncased"
+        )
+
+        portuguese_corpus = (
+            pt.numpy().decode("utf-8") for pt, _ in data
+        )
+        tokenizer_pt = pretrained_pt.train_new_from_iterator(
+            portuguese_corpus,
+            vocab_size=2 ** 13
+        )
+
+        english_corpus = (
+            en.numpy().decode("utf-8") for _, en in data
+        )
+        tokenizer_en = pretrained_en.train_new_from_iterator(
+            english_corpus,
+            vocab_size=2 ** 13
+        )
+
         return tokenizer_pt, tokenizer_en
