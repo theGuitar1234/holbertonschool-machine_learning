@@ -1,42 +1,43 @@
 #!/usr/bin/env python3
-"""Module for training a Word2Vec model."""
-
+"""
+    Train Word2Vec
+"""
 import gensim
 
 
 def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
                    negative=5, cbow=True, epochs=5, seed=0, workers=1):
-    """Create, build, and train a Gensim Word2Vec model.
+    """
+    Creates and trains a gensim word2vec model.
 
     Args:
-        sentences (list): List of tokenized sentences to train on.
-        vector_size (int): Dimensionality of the word vectors.
-        min_count (int): Minimum word frequency required for training.
-        window (int): Maximum distance between current and predicted words.
-        negative (int): Size of negative sampling.
-        cbow (bool): Whether to use CBOW. If False, use Skip-gram.
-        epochs (int): Number of training iterations.
-        seed (int): Seed for the random number generator.
-        workers (int): Number of worker threads.
+        sentences: List of sentences to be trained on.
+        vector_size: Dimensionality of the embedding layer.
+        min_count: Minimum number of occurrences of a word for use in training.
+        window: Maximum distance between the current and predicted word within
+            a sentence.
+        negative: Size of negative sampling.
+        cbow: Boolean to determine training type. True is for CBOW,
+            False is for Skip-gram.
+        epochs: Number of iterations to train over.
+        seed: Seed for the random number generator.
+        workers: Number of worker threads to train the model.
 
     Returns:
-        gensim.models.Word2Vec: The trained Word2Vec model.
+        The trained model.
     """
-    model = gensim.models.Word2Vec(
-        vector_size=vector_size,
-        min_count=min_count,
-        window=window,
-        negative=negative,
-        sg=0 if cbow else 1,
-        seed=seed,
-        workers=workers
-    )
+    sg = 0 if cbow else 1
 
+    model = gensim.models.Word2Vec(sentences=sentences,
+                                   vector_size=vector_size,
+                                   window=window,
+                                   min_count=min_count,
+                                   negative=negative,
+                                   seed=seed,
+                                   workers=workers,
+                                   sg=sg)
     model.build_vocab(sentences)
-    model.train(
-        sentences,
-        total_examples=model.corpus_count,
-        epochs=epochs
-    )
+
+    model.train(sentences, total_examples=model.corpus_count, epochs=epochs)
 
     return model
